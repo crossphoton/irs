@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "nodemon app.js"
   },
   "repository": {
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/mvp-project/irs#readme",
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
