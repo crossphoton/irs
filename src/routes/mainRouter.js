@@ -1,7 +1,13 @@
 const router = require("express").Router();
+const { Console } = require("console");
 const csv=require('csvtojson')
 var multer = require('multer')
 var path = require('path');
+
+var Original ;
+var Copy ;
+var pre = require('../processing/preprocessing.js');
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/')
@@ -38,9 +44,18 @@ router.post('/submit', function(req, res){
             console.log("Received file, check: " + csvpath);
             csv()
               .fromFile(csvpath)
-                .then((jsonObj)=>{                  
-                  console.log(jsonObj);
+                .then((jsonObj)=>{  
+                  Original = jsonObj;              
+                  Copy = pre(Original);
+                  console.log("This is copy:");
+                  console.log(Copy);
+                  console.log("\nThis is original :");
+                  console.log(Original);
                 })
+        /*   console.log("This is original :\n");
+            console.log(Original);
+            console.log("This is copy:\n");
+            console.log(Copy);*/
             res.send("Upload successful!");
         }
     });
