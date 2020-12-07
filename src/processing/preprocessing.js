@@ -26,6 +26,7 @@ module.exports = function(array)
           copy[object][property] = copy[object][property].replace(/[{()}]/g,'');
           copy[object][property] = copy[object][property].replace(/[!#$%^&*_+=]/g,'');
           copy[object][property] = copy[object][property].replace(/\/\\/g,'');
+          copy[object][property] = copy[object][property].replace(/-/g,'');
           //copy[object][property] = copy[object][property].replace(//g,'');
         }
     }
