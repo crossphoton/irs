@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "init": "npm i && mkdir uploads",
     "start": "node app.js",
     "test": "nodemon app.js"
   },

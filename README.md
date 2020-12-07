@@ -5,7 +5,7 @@
 ### Initializing
 
 ```
-npm i
+npm run init
 ```
 
 
