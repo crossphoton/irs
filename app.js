@@ -6,8 +6,12 @@ require("dotenv").config();
 
 mongoose.connect( process.env.MONGO_URL,
         { useNewUrlParser: true ,useUnifiedTopology: true },
-        () => console.log('Connected to DB')
+        (err) => {
+                if(err) throw err;
+                console.log("Database connected.");
+        }
 );
+
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
@@ -18,5 +22,17 @@ const router = require("./src/routes/mainRouter");
 app.use("/api", router);
 
 
+app.use((req, res, next)=>{
+        res.status(404);
+        if(req.accepts('html')){
+                res.redirect("/404.html");
+                return;
+        }
+        else{
+                res.json({error: "Not found"});
+                return;
+        }
+})
 
-app.listen(process.env.PORT, ()=>console.log("Server started at "+process.env.PORT));
+
+app.listen(process.env.PORT, ()=>console.log("Server started."));
