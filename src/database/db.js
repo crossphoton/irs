@@ -1,7 +1,16 @@
 const DataModel = require("./DataModel");
 
-function addData(data){
-    console.log("You can save data here");
+function addData(preprocessed, original, fields){
+    
+    var dataEntry = new DataModel({
+        fields,
+        originalData : original,
+        data: preprocessed
+    });
+
+    try{
+        dataEntry.save();
+    } catch(err) {console.log(err);}
 }
 
 function getData(id){

@@ -8,15 +8,20 @@ module.exports = function(array){
     {
         for(var property in copy[object])
         {
-           copy[object][property] = copy[object][property].toLowerCase()
-                    .replace(/,/g,'')
-                    .replace(/\s/g,'')
-                    .replace(/[\[\]]/g,'')
-                    .replace(/[{()}]/g,'')
-                    .replace(/[!#$%^&*_+=]/g,'')
-                    .replace(/\/\\/g,'')
-                    .replace(/-/g,'')
-                    .replace(".", "");
+            if(copy[object][property] == undefined) copy[object][property] = "";
+            else{
+                copy[object][property] = String(copy[object][property]).toLowerCase()
+                            .replace(/,/g,'')
+                            .replace(/\s/g,'')
+                            .replace(/[\[\]]/g,'')
+                            .replace(/[{()}]/g,'')
+                            .replace(/[!#@$%^&*_+=]/g,'')
+                            .replace(/\/\\/g,'')
+                            .replace(/-/g,'')
+                            .replace('.', '')
+                            .replace("\"",'')
+                            .replace("\'",'');
+            }
         }
     }
 

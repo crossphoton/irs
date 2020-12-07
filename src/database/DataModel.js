@@ -4,7 +4,10 @@ const DataSchema = new mongo.Schema({
     uploadDate: {
         type: Date,
         default: Date.now()
-    }
+    },
+    fields: [],
+    data: [],
+    originalData : []
 })
 
 
