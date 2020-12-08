@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRS viewer</title>
+</head>
+<body>
+    <div class="id"></div>
+</body>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const documentId = urlParams.get('documentId');
+
+    document.getElementsByClassName("id")[0].textContent = documentId;
+
+    fetch("/api/document/"+documentId)
+        .then(response => response.json())
+        .then(data => fillInfo(data));
+    
+
+    function fillInfo(data){
+        console.table(data);
+        const upload = new Date(data.uploadDate);
+        console.log(upload.toLocaleString());
+
+
+        createFilters(data);
+    }
+
+    function createFilters(data){console.log("Karenge.\nYe bhi karenge.")}
+</script>
+
+</html>

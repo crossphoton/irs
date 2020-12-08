@@ -1,10 +1,7 @@
+const { mongo } = require("mongoose");
 const DataModel = require("./DataModel");
 
-<<<<<<< HEAD
-function addData(data){
-    console.log("You can save data here");
-=======
-function addData(preprocessed, original, fields){
+async function addData(preprocessed, original, fields){
     
     var dataEntry = new DataModel({
         fields,
@@ -14,12 +11,21 @@ function addData(preprocessed, original, fields){
 
     try{
         dataEntry.save();
+        return dataEntry._id;
     } catch(err) {console.log(err);}
->>>>>>> 6292ba7603c5f890b67a09cea51e0516458a3b89
 }
 
-function getData(id){
-    console.log("You can get data here.");
+function getData(documentId, res){
+    
+    if(mongo.ObjectID.isValid(documentId))
+        DataModel.findOne({_id: documentId}, {__v:0}, (err, document)=>{
+            if(err){
+                res.sendStatus(500);
+                throw err;
+            }
+            res.json(document);
+        })
+    else res.sendStatus(400);
 }
 
 module.exports = {addData, getData};
