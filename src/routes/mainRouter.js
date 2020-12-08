@@ -3,6 +3,7 @@ const csv=require('csvtojson')
 
 var pre = require('../processing/preprocessing.js');
 var upload = require("../middlewares/multer_helper");
+var getDataFromDatabase = require("../database/db").getData;
 
 
 router.post('/submit', function(req, res){
@@ -18,11 +19,17 @@ router.post('/submit', function(req, res){
             csv()
               .fromFile(csvpath)
                 .then((jsonObj)=>{           
-                  pre(jsonObj);
+                  pre(jsonObj).then(id => res.redirect("/viewer.html?documentId="+id));
                 })
-            res.send("Upload successful!");
         }
     });
 });
+
+
+router.get("/document/:documentId", (req, res)=>{
+    const documentId = req.params.documentId;
+
+    getDataFromDatabase(documentId, res);
+})
 
 module.exports = router;

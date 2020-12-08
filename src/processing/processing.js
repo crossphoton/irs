@@ -1,12 +1,5 @@
 const { addData } = require("../database/db");
 
-<<<<<<< HEAD
-const databaseFunctions = require("../database/db").addData;
-
-module.exports = function (original, preprocessed){
-    console.log("This is processing");
-    addData("");
-=======
 class Field{
     name;
     type;
@@ -42,6 +35,5 @@ module.exports = function (original, preprocessed){
         fields[field].criterias = Array.from(criterias);
     }
 
-    addData(preprocessed, original, fields);
->>>>>>> 6292ba7603c5f890b67a09cea51e0516458a3b89
+    return addData(preprocessed, original, fields);
 }
