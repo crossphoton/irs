@@ -7,11 +7,74 @@
 </head>
 <body>
     <div class="id"></div>
+    <div class="header"></div>
+    <div class="main-content">
+        <div id="filter-section"></div>
+        <div id="table">
+            <table id="table-main-content">
+                <tr id="headings"></tr>
+            </table>
+        </div>
+    </div>
 </body>
+
+<style>
+
+    * {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    .main-content{
+        display: flex;
+        width: 100vw;
+        min-height: 80vh;
+    }
+
+    .main-content * {
+        margin: 10px;
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    flex: 3;
+    }
+
+    .filter-name{
+        font-size: 20px;
+    }
+
+    #filter-section{
+        padding-right: 100px;
+        max-width: 30%;
+        border-right: 2px solid black;
+    }
+    
+    input, input:focus{
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+        max-width: 30px;
+    }
+
+</style>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const documentId = urlParams.get('documentId');
+    const headingsRow = document.getElementById("headings");
+    const table = document.getElementById("table-main-content");
+    const filterSection = document.getElementById("filter-section");
 
     document.getElementsByClassName("id")[0].textContent = documentId;
 
@@ -21,15 +84,61 @@
     
 
     function fillInfo(data){
-        console.table(data);
-        const upload = new Date(data.uploadDate);
-        console.log(upload.toLocaleString());
-
-
+        createHeadings(data);
+        fillEntries(data);
         createFilters(data);
     }
 
-    function createFilters(data){console.log("Karenge.\nYe bhi karenge.")}
+    function createHeadings(data){
+        headingsRow.innerHTML = "";
+
+        for(field in data.fields){
+            const name = String(data.fields[field].name);
+            const type = String(data.fields[field].type);
+            headingsRow.innerHTML += `<th type="${type}" class=${name.toLowerCase()}>${name.toUpperCase()}</th>`
+        }
+    }
+
+    function fillEntries(data){
+
+        for(entry in data.originalData){
+            var row = "";
+            for(field in data.originalData[entry])
+                row += `<td> ${data.originalData[entry][field]} </td>`;
+            
+            table.innerHTML+= `<tr> ${row} </tr>`;
+        }
+    }
+
+    function createFilters(data){
+        filterSection.innerHTML = "";
+        
+        for(field in data.fields){
+
+            var fieldData = data.fields[field];
+            filterSection.innerHTML += `<div class="${fieldData.name} filter">
+                        <b class="filter-name">${fieldData.name.toUpperCase()}</b><br>
+                        </div>`
+
+            var temp = document.getElementsByClassName(fieldData.name)[0];
+            
+            for(filters in fieldData.criterias){
+
+                if(fieldData.type == typeof("jkvfka")){
+                    if(fieldData.criterias[filters] == null) continue;
+                    temp.innerHTML += `<input type=checkbox checked> ${String(fieldData.criterias[filters]).toUpperCase()} </input>`;
+
+                }
+
+            }
+
+            if(fieldData.type == typeof(5335)){
+                temp.innerHTML += `<input type=number /> to <input type=number />
+                                    <button class="filter-value-changed">Filter</button>`
+            }
+        }
+    }
+    
 </script>
 
 </html>
