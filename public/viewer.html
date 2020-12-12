@@ -7,12 +7,11 @@
 </head>
 <body>
     <div class="id"></div>
-    <div class="header"></div>
+    <div class="header"><button id="reset" onclick="fillInfo(dataWeGot)">Reset</button></div>
     <div class="main-content">
         <div id="filter-section"></div>
         <div id="table">
             <table id="table-main-content">
-                <tr id="headings"></tr>
             </table>
         </div>
     </div>
@@ -78,36 +77,79 @@
 
     document.getElementsByClassName("id")[0].textContent = documentId;
 
+    var dataWeGot;
+
+    //String inputs event listener
+    filterSection.addEventListener("change", (event)=>{
+
+        const className = event.srcElement.className;
+        var test = table.getElementsByClassName(className);
+        for(entry in test){
+            if((event.srcElement.value).toLowerCase() == dataFilter(test[entry].textContent))
+                test[entry].parentElement.style.display = (event.srcElement.checked) ? "table-row": "none";
+        }
+    });
+
+    const dataFilter = (data)=>{
+
+        return String(data).toLowerCase()
+                            .replace(/,/g,'')
+                            .replace(/\s/g,'')
+                            .replace(/[\[\]]/g,'')
+                            .replace(/[{()}]/g,'')
+                            .replace(/[!#@$%^&*_+=]/g,'')
+                            .replace(/\/\\/g,'')
+                            .replace(/-/g,'')
+                            .replace('.', '')
+                            .replace("\"",'')
+                            .replace("\'",'');
+        
+    }
+
+    var numberFilter = (event)=>{
+        var parent = event.srcElement.parentElement;
+        const from = Number(parent.getElementsByClassName("from")[0].value);
+        const to = Number(parent.getElementsByClassName("to")[0].value);
+        var s = table.getElementsByClassName(parent.className);
+        for(var entry = 1; entry < s.length; entry++){
+            let value = Number(dataFilter(s[entry].textContent));
+            s[entry].parentElement.style.display = (value != NaN && value <= to && value >= from) ? "table-row": "none";
+        }
+    }
+
     fetch("/api/document/"+documentId)
         .then(response => response.json())
         .then(data => fillInfo(data));
     
 
     function fillInfo(data){
-        createHeadings(data);
-        fillEntries(data);
+        createTable(data);
         createFilters(data);
+        dataWeGot = data;
     }
 
-    function createHeadings(data){
-        headingsRow.innerHTML = "";
+    function createTable(data){
+
+        var tableData = "<tr id='headings'>";
 
         for(field in data.fields){
             const name = String(data.fields[field].name);
             const type = String(data.fields[field].type);
-            headingsRow.innerHTML += `<th type="${type}" class=${name.toLowerCase()}>${name.toUpperCase()}</th>`
+            
+            tableData += `<th type="${type}" class=${name.toLowerCase()}>${name.toUpperCase()}</th>`;
         }
-    }
 
-    function fillEntries(data){
+        tableData += "</tr>";
 
         for(entry in data.originalData){
             var row = "";
             for(field in data.originalData[entry])
-                row += `<td> ${data.originalData[entry][field]} </td>`;
+                row += `<td class="${field.toLowerCase()}">${data.originalData[entry][field]}</td>`;
             
-            table.innerHTML+= `<tr> ${row} </tr>`;
+            tableData+= `<tr>${row}</tr>`;
         }
+
+        table.innerHTML = tableData;
     }
 
     function createFilters(data){
@@ -116,25 +158,24 @@
         for(field in data.fields){
 
             var fieldData = data.fields[field];
-            filterSection.innerHTML += `<div class="${fieldData.name} filter">
+            filterSection.innerHTML += `<div class="${fieldData.name.toLowerCase()} filter">
                         <b class="filter-name">${fieldData.name.toUpperCase()}</b><br>
                         </div>`
 
-            var temp = document.getElementsByClassName(fieldData.name)[0];
+            var temp = document.getElementsByClassName(fieldData.name.toLowerCase())[0];
             
-            for(filters in fieldData.criterias){
+            if(fieldData.type == typeof("jkvfka")){
+                for(filters in fieldData.criterias){
 
-                if(fieldData.type == typeof("jkvfka")){
                     if(fieldData.criterias[filters] == null) continue;
-                    temp.innerHTML += `<input type=checkbox checked> ${String(fieldData.criterias[filters]).toUpperCase()} </input>`;
+                    temp.innerHTML += `<input value="${String(fieldData.criterias[filters]).toLowerCase()}" class="${fieldData.name.toLowerCase()}" type=checkbox checked> ${String(fieldData.criterias[filters]).toUpperCase()} </input>`;
 
                 }
-
             }
 
             if(fieldData.type == typeof(5335)){
-                temp.innerHTML += `<input type=number /> to <input type=number />
-                                    <button class="filter-value-changed">Filter</button>`
+                temp.innerHTML += `<div class=${fieldData.name.toLowerCase()}><input class="from" required type=number /> to <input class="to" required type=number />
+                                    <button onclick=numberFilter(event)>Filter</button></div>`
             }
         }
     }
