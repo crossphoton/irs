@@ -19,7 +19,7 @@ router.post('/submit', function(req, res){
             csv()
               .fromFile(csvpath)
                 .then((jsonObj)=>{           
-                  pre(jsonObj).then(id => res.redirect("/viewer.html?documentId="+id));
+                  pre(jsonObj).then(id => res.redirect("/viewer?documentId="+id));
                 })
         }
     });
