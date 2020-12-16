@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "init": "npm i && mkdir uploads",
-    "start": "node app.js",
+    "start": "mkdir uploads && node app.js",
     "test": "nodemon app.js"
   },
   "repository": {
