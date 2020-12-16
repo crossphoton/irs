@@ -6,11 +6,123 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Hello World</h1>
-
-    <form action="/api/submit" method="post" enctype="multipart/form-data">
-        <input type="file" name="inputFile" id="inputFile">
-        <button type="submit">Submit</button>
-    </form>
+    <div id ="top">
+        <div id ="image" >
+            <a href="https://iiitr.ac.in/" title="Go visit our iiitr webpage"><img id="logo" height="150px" src="assets/logo-black-solid.png"></a>
+        </div>
+    </div>
+    <div id="middle">
+        <div id="RAS">
+            <a href="About.html" id = "About" title ="Wanna know more about the software ? Click here">
+            <h1>
+                Recruitment Assistance System (RAS)
+            </h1>
+            </a>
+            <h3>
+                Upload Your input file here :
+            </h3>
+        </div>
+        <div id = "form">
+            <form action="/api/submit" method="post" enctype="multipart/form-data">
+                <input required type="file" name="inputFile" id="inputFile">
+                <button type="submit">Import Data</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div id="copyright">
+            <p>Copyright &copy; 2020 RAS</p>
+        </div>
+        <div>
+            
+        </div>
+    </footer>
 </body>
+<style>
+    #About:link ,#About:visited
+    {
+        color: rgb(0, 145, 255);
+        text-decoration: none;
+    }
+    #About:hover , #About:active
+    {
+        text-decoration: none;
+        color: rgb(67, 173, 253);
+    }
+    body{
+        background-color: rgb(243, 233, 215);
+    }
+    #image
+    {
+        position: absolute;
+        top : 10px;
+        left: 50%;
+        margin-left: -357.34px;
+    }
+    #top
+    {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        font-size: 30px;
+        top: 0;
+
+        background-color: aliceblue;
+    }
+    footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        background-color:  rgb(170, 170, 170);
+        margin-left: 0px;
+    }
+    #copyright
+    {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        margin-left: -111px;
+        text-align: center;
+        color: white;
+        font-size: 23px; 
+    }
+    #RAS
+    {
+        position: fixed;
+        top: 200px;
+        left: 50%;
+        margin-left: -337.4px;
+        text-align: center;
+        font-family: "Barlow Condensed", sans-serif;
+    }
+    h1
+    {
+        margin-top: 10px;
+        margin-bottom: 50px;
+    }
+    #form
+    {
+        position: fixed;
+        top : 400px;
+        left: 50%;
+        height: 68px;
+        width: 470px;
+        margin-left: -220px;
+        text-align: center;
+        background-color: rgb(255, 249, 240);
+    }
+    form
+    {
+        position: fixed;
+        top: 420px;
+        left: 760px;
+    }
+    h3
+    {
+        margin-top: 80px;
+        margin-bottom: 0px;
+    }
+</style>
 </html>
