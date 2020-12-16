@@ -216,7 +216,7 @@
             csv.push(row.join(","));
         }
         var csv_string = csv.join('\n');
-        var filename = 'rejected.csv';
+        var filename = 'rejected'+documentId+'.csv';
         var link = document.createElement('a');
         link.style.display = 'none';
         link.setAttribute('target', '_blank');
