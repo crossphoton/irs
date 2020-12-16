@@ -18,7 +18,6 @@ module.exports = function(array){
                             .replace(/[!#@$%^&*_+=]/g,'')
                             .replace(/\/\\/g,'')
                             .replace(/-/g,'')
-                            .replace('.', '')
                             .replace("\"",'')
                             .replace("\'",'');
             }
