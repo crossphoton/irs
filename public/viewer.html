@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IRS viewer</title>
 </head>
-<body>
+<body style="background-color:rgb(255, 244, 227);">
     <div class="id"></div>
     <div class="header"><button id="reset" onclick="fillInfo(dataWeGot)">Reset</button></div>
+    <h2>&nbsp; SPECIFY FILTER CRITERIA: </h2>
     <div class="main-content">
         <div id="filter-section"></div>
         <div id="table">
@@ -26,7 +27,7 @@
     }
     
     td, th {
-      border: 1px solid #dddddd;
+      border: 1px solid #000000;
       text-align: left;
       padding: 8px;
     }
@@ -37,7 +38,7 @@
 
     .main-content{
         display: flex;
-        width: 100vw;
+        width: 90vw;
         min-height: 80vh;
     }
 
